@@ -1,7 +1,8 @@
 package model;
 
 public abstract class KoleksiFisik extends Koleksi implements Terarsip {
-    private String nomorRak;
+
+    private final String nomorRak;
 
     public KoleksiFisik(String kode, String judul, int tahunTerbit, String nomorRak) {
         super(kode, judul, tahunTerbit);
@@ -16,16 +17,20 @@ public abstract class KoleksiFisik extends Koleksi implements Terarsip {
     @Override
     public String lokasiLantai() {
         if (nomorRak == null || nomorRak.isEmpty()) {
-            return "Lantai belum ditentukan";
+            return "Belum diset";
         }
-        char awal = Character.toUpperCase(nomorRak.charAt(0));
-        if (awal >= 'A' && awal <= 'C') {
-            return "Lantai 1";
+        switch (Character.toUpperCase(nomorRak.charAt(0))) {
+            case 'A':
+            case 'B':
+            case 'C':
+                return "Lantai 1";
+            case 'D':
+            case 'E':
+            case 'F':
+                return "Lantai 2";
+            default:
+                return "Lantai 3";
         }
-        if (awal >= 'D' && awal <= 'F') {
-            return "Lantai 2";
-        }
-        return "Lantai 3";
     }
 
     @Override
@@ -35,6 +40,6 @@ public abstract class KoleksiFisik extends Koleksi implements Terarsip {
 
     @Override
     public String deskripsi() {
-        return super.deskripsi() + " | " + ringkasanArsip();
+        return super.deskripsi() + " >> " + ringkasanArsip();
     }
 }

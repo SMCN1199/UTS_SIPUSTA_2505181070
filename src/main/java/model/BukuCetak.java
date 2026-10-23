@@ -1,7 +1,8 @@
 package model;
 
 public class BukuCetak extends KoleksiFisik {
-    private int jumlahHalaman;
+
+    private final int jumlahHalaman;
     private boolean sedangDiperbaiki;
 
     public BukuCetak(String kode, String judul, int tahunTerbit, int jumlahHalaman, String nomorRak, boolean sedangDiperbaiki) {
@@ -12,28 +13,27 @@ public class BukuCetak extends KoleksiFisik {
 
     @Override
     public String jenisKoleksi() {
-        return "BukuCetak";
+        return "Buku Cetak";
     }
 
     @Override
     public boolean isLayakDipinjam() {
-   
-        return !sedangDiperbaiki;
+        return this.sedangDiperbaiki == false;
     }
 
     @Override
     public String alasanTidakLayak() {
-        return "buku ini sedang diperbaiki oleh petugas perpustakaan";
+        return "kondisi buku sedang dalam perbaikan";
     }
 
     @Override
     public String keterangan() {
-        return jumlahHalaman + " halaman, " + (sedangDiperbaiki ? "sedang diperbaiki" : "siap dipinjam");
+        return String.format("%d hlm | %s", jumlahHalaman, (sedangDiperbaiki ? "Rusak" : "Bagus"));
     }
 
     @Override
     public String deskripsi() {
-        return super.deskripsi() + " | " + jumlahHalaman + " halaman | " 
-                + (sedangDiperbaiki ? "sedang diperbaiki" : "siap dipinjam");
+        String kondisi = sedangDiperbaiki ? "Sedang Diperbaiki" : "Siap Dipinjam";
+        return super.deskripsi() + " | Info: " + jumlahHalaman + " halaman, Kondisi: " + kondisi;
     }
 }

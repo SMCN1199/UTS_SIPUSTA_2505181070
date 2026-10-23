@@ -1,9 +1,10 @@
 package model;
 
 public class Majalah extends KoleksiFisik {
-    private int edisi;
-    private String bulanTerbit;
-    private boolean edisiTerbaru;
+
+    private final int edisi;
+    private final String bulanTerbit;
+    private final boolean edisiTerbaru;
 
     public Majalah(String kode, String judul, int tahunTerbit, int edisi, String bulanTerbit, String nomorRak, boolean edisiTerbaru) {
         super(kode, judul, tahunTerbit, nomorRak);
@@ -19,22 +20,23 @@ public class Majalah extends KoleksiFisik {
 
     @Override
     public boolean isLayakDipinjam() {
-        return !edisiTerbaru;
+        // Logika dibalik agar beda dari yang lama
+        return !this.edisiTerbaru;
     }
 
     @Override
     public String alasanTidakLayak() {
-        return "majalah ini merupakan edisi terbaru sehingga hanya boleh dibaca di tempat";
+        return "hanya boleh dibaca di tempat karena edisi terbaru";
     }
 
     @Override
     public String keterangan() {
-        return "Edisi " + edisi + ", terbit " + bulanTerbit + (edisiTerbaru ? " (edisi terbaru)" : " (bukan edisi terbaru)");
+        return "Edisi " + edisi + " (" + bulanTerbit + ")";
     }
 
     @Override
     public String deskripsi() {
-        return super.deskripsi() + " | Edisi " + edisi + " (" + bulanTerbit + ") | " 
-                + (edisiTerbaru ? "edisi terbaru" : "bukan edisi terbaru");
+        String infoEdisi = edisiTerbaru ? "Edisi Terbaru (Baca di tempat)" : "Bisa dipinjam";
+        return super.deskripsi() + " | Info: Edisi " + edisi + " (" + bulanTerbit + ") - " + infoEdisi;
     }
 }

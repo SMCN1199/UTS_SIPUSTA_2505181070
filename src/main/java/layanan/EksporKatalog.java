@@ -7,28 +7,20 @@ import java.io.PrintWriter;
 import java.util.List;
 
 public class EksporKatalog {
-    
-    public void ekspor(List<Koleksi> daftarKoleksi) {
-        try (PrintWriter penulis = new PrintWriter(new FileWriter("katalog.txt"))) {
-            
-            penulis.printf("%-7s | %-34s | %-13s | %-4s | %-11s | %-27s | %s%n",
-                    "KODE", "JUDUL", "JENIS", "THN", "STATUS", "LOKASI ARSIP", "KETERANGAN");
-            penulis.println("-------------------------------------------------------------------------------------------------------------------------------------");
 
-            for (Koleksi k : daftarKoleksi) {
-                penulis.printf("%-7s | %-34s | %-13s | %-4d | %-11s | %-27s | %s%n",
-                        k.getKode(),
-                        k.getJudul(),
-                        k.jenisKoleksi(),
-                        k.getTahunTerbit(),
-                        k.isLayakDipinjam() ? "Layak" : "Tidak layak",
-                        k.lokasiArsip(),
-                        k.keterangan());
+    public static void cetakKeFile(List<Koleksi> daftar, String namaFile) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(namaFile))) {
+            pw.println("KODE | JUDUL | JENIS | TAHUN | KETERANGAN");
+
+            for (int i = 0; i < daftar.size(); i++) {
+                Koleksi k = daftar.get(i);
+                String baris = String.format("%s | %s | %s | %d | %s",
+                        k.getKode(), k.getJudul(), k.jenisKoleksi(), k.getTahunTerbit(), k.keterangan());
+                pw.println(baris);
             }
-            System.out.println("Katalog berhasil diekspor ke berkas \"katalog.txt\".");
-            
+            System.out.println("Berhasil menyimpan ke " + namaFile);
         } catch (IOException e) {
-            System.out.println("Gagal mengekspor katalog: " + e.getMessage());
+            System.out.println("Gagal ekspor: " + e.getMessage());
         }
     }
 }

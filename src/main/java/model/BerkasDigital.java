@@ -1,8 +1,9 @@
 package model;
 
 public class BerkasDigital extends Koleksi {
-    private double ukuranMB;
-    private String tautanUnduh;
+
+    private final double ukuranMB;
+    private final String tautanUnduh;
 
     public BerkasDigital(String kode, String judul, int tahunTerbit, double ukuranMB, String tautanUnduh) {
         super(kode, judul, tahunTerbit);
@@ -12,29 +13,21 @@ public class BerkasDigital extends Koleksi {
 
     @Override
     public String jenisKoleksi() {
-        return "BerkasDigital";
+        return "Berkas Digital";
     }
 
     @Override
     public boolean isLayakDipinjam() {
-        // Berkas digital selalu layak dipinjam
-        return true;
-    }
-
-    private String ukuranTeks() {
-        if (ukuranMB == Math.rint(ukuranMB)) {
-            return String.format("%.0f MB", ukuranMB);
-        }
-        return String.format("%.1f MB", ukuranMB);
+        return true; // Selalu layak
     }
 
     @Override
     public String keterangan() {
-        return ukuranTeks() + ", " + tautanUnduh;
+        return String.format("%.1f MB | %s", ukuranMB, tautanUnduh);
     }
 
     @Override
     public String deskripsi() {
-        return super.deskripsi() + " | " + ukuranTeks() + " | " + tautanUnduh;
+        return super.deskripsi() + " | Info: " + ukuranMB + " MB, Link: " + tautanUnduh;
     }
 }
